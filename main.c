@@ -9,100 +9,91 @@ typedef struct {
     int numero_elementos;
     int** elementos;
 } matriz;
-
-
-struct nodo {
+/* struct recebe o tamanho da matriz 
+e um ponteiro de ponteiro que recebe os elementos da matriz
+*/
+typedef struct{
     int indice;
     int valor;
-};
-
-void ler_arquivo(matriz*, char*);
-void logo(FILE *arquivo );
-void realizar_movimento_troca( matriz m, int* solucao_inicial, int* melhor_vizinho);
-
-void construir_caminho_aleatorio( matriz m, int* caminho);
-
-int calcular_custo( matriz, int*);
-
-void construir_caminho( matriz, int*);
-
-void construir_caminho_aleatorio( matriz, int*);
-
-void imprimir_caminho(int, int*);
-
-void imprimir_matriz( matriz);
+}casa; 
+// struct recebe em qual casa o player está
+void ler_arquivo( matriz* m, char* arquivo);
+void imprimir_matriz_jogador(FILE *arquivo );
+void construindo_caminho_IA( matriz m, int* caminho);
+int calcular_custo( matriz m, int* caminho);
 void linha();
+void imprimir_caminho(int n, int* caminho);
+void imprimir_matriz( matriz m);
 
 int main() {
 
   matriz m;
-  FILE *arquivo;
+ FILE *arquivo;
   arquivo = fopen("cidade_Jogador.txt","r");
-  logo(arquivo);
-  int custo_solucao_aleatoria = 0, menor = INT_MAX ;
-  ler_arquivo(&m, "cidade1.txt");
+  imprimir_matriz_jogador(arquivo); /* --> aqui está lendo os arquivos referente a matriz que o jodador vai
+  visualizar */
+  ler_arquivo(&m, "cidade1.txt"); // matriz que está sendo usada pela IA 
 
-  int caminhoProximo, caminho[]={'0'};
-  int custo = 0,cont=0,caminhoAtual=0;
+  int custo_IA = 0, menor = INT_MAX ;
+
+  int proximoCaminho,caminhoAtual=0,cont=0,c[10]={'0'} ,custo = 0;
+
   int tam = m.numero_elementos;
-  int c[10]={'0'};
   
 printf("\n");
 
-imprimir_matriz(m);
+//imprimir_matriz(m);
+/*
+    ESTE "FOR" EH PARA AS ENTRADAS DO PLAYER
 
-  for(int i=0; i<tam;i++){
+
+  for(int i=0; i< tam;i++){
     printf("Qual casa dejesa ir ?\n");
-    scanf("%d", &caminhoProximo);
-  
-    c[i] = caminhoProximo ;
-    custo = custo + m.elementos[caminhoAtual][caminhoProximo];
-    caminhoAtual = caminhoProximo ;
+    scanf("%d", &proximoCaminho); // AQUI DIZ PARA QUAL CAMINHO ELE QUE IR 
+
+    c[i] = proximoCaminho ; // VETOR QUE GUARDA O CAMINHO DO PLAYER 
+    
+    custo = custo + m.elementos[caminhoAtual][proximoCaminho]; // CALCULA O CUTO DA ESCOLHA DO PLAYER 
+
+    caminhoAtual = proximoCaminho ; 
+     FAZ COM QUE O PLAYER FIQUE NO CAMINHO ATUAL ANTES DE IR 
+    PARA A PROXIMA CIDADE 
 }
-printf("\n SEU CAMINHO: \n");
+printf("\n SEU CAMINHO: ");
 for(int i = 0; i<10;i++){
   printf("%d ", c[i]);
 }
 printf("\n CUSTO: %d",custo);
 
-/*
-
-   int *solucao_inicial = malloc((m.numero_elementos)*sizeof(int*));
-
-    construir_caminho(m, solucao_inicial);
-printf("\n");
-    printf("\nSolucao inicial: ");
-    imprimir_caminho(m.numero_elementos, solucao_inicial);
-
-    int custo_solucao_inicial = calcular_custo(m, solucao_inicial);
-    printf("\nCusto solução inicial: %d\n", custo_solucao_inicial);
-
+// AP PARTIR DAQUI É A JOGADA DA IA 
 */
       srand(time(NULL));
-      linha();
 
-    int *solucao_aleatoria = malloc((m.numero_elementos + 1) * sizeof(int*));
-
+    int *solucao_aleatoria = malloc((m.numero_elementos + 1) * sizeof(int*));/*
+    --> ESSE PONTEIRO RECEBE O TAMANHO DA MATRIZ + 1 ESPAÇO ADCIONAL 
+    */ 
+// ESSE FOR ACHA A MELHOR JOGADA DA IA ENTRE UM DETERMINADO VALOR 
     for(int i = 0; i < 10000; i++) {
 
-        construir_caminho_aleatorio(m, solucao_aleatoria);
-        custo_solucao_aleatoria = calcular_custo(m, solucao_aleatoria);
+        construindo_caminho_IA(m, solucao_aleatoria); // AQUI CONSTROI CAMINHOS ALEATORIOS 
+        custo_IA = calcular_custo(m, solucao_aleatoria);//
 
-        if(menor>custo_solucao_aleatoria){
-          menor = custo_solucao_aleatoria;
-          cont++;
-           if(cont == 10){
+        if(menor>custo_IA){
+          menor = custo_IA;
+
+           printf("/n O CAMINHO DA IA FOI: ");
             imprimir_caminho(m.numero_elementos,solucao_aleatoria);
            }
         }
-    } 
+
     printf("Custo solução IA: %d\n", menor);
     linha();
 
 }
-//-----------------------------------------------------------------------------
 
-
+/*
+--> ESTA FUNÇÃO LER A MATRIZ USADA PELA IA 
+*/
 void ler_arquivo( matriz* m, char* arquivo) {
     FILE *fp = fopen(arquivo, "r");
 
@@ -120,30 +111,27 @@ void ler_arquivo( matriz* m, char* arquivo) {
 
     fclose(fp);
 }
-//-----------------------------------------------------------------------------
-void logo(FILE *arquivo ){      	
+
+ void imprimir_matriz_jogador(FILE *arquivo ){
   if (arquivo == NULL){ 		
     printf("Não abriu"); 
-  } 	
-  char ch = fgetc(arquivo); 	 	
+  } 
+
+  char ch = fgetc(arquivo); 
+
   while (ch != EOF){ 	
   	printf("%c", ch); 		
     ch = fgetc(arquivo); 	
     }
   printf("\n");
+
  }
 
-void copiar_caminho( matriz m, int* origem, int* destino) {
-    int i;
 
-    for(i = 0; i <= m.numero_elementos; i++) {
-        destino[i] = origem[i];
-    }
-}
 
-void construir_caminho_aleatorio( matriz m, int* caminho) {
+void construindo_caminho_IA( matriz m, int* caminho) {
     int *inseridos = malloc(m.numero_elementos * sizeof(int));
-    struct nodo *vizinhos = malloc(m.numero_elementos * sizeof(struct nodo));
+    casa *vizinhos = malloc(m.numero_elementos * sizeof(casa));
 
     for(int i = 0; i < m.numero_elementos; i++) {
         inseridos[i] = FALSE;
@@ -186,46 +174,22 @@ int calcular_custo( matriz m, int* caminho) {
 
     return custo;
 }
-
-//-----------------------------------------------------------------------------
-
-void construir_caminho( matriz m, int* caminho) {
-    int *inseridos = malloc(m.numero_elementos * sizeof(int));
-
-    for(int i = 0; i < m.numero_elementos; i++) {
-        inseridos[i] = FALSE;
-    }
-
-    caminho[0] = 0;
-    inseridos[0] = TRUE;
-
-    for(int i = 0; i < m.numero_elementos; i++) {
-        int valor_referencia = INT_MAX;
-        int vizinho_selecionado = 0;
-
-        for(int j = 0; j < m.numero_elementos; j++) {
-            if(!inseridos[j] && valor_referencia > m.elementos[i][j] && m.elementos[i][j]>-1) {
-                vizinho_selecionado = j;
-                valor_referencia = m.elementos[i][j];
-            }
-        }
-
-        caminho[i + 1] = vizinho_selecionado;
-        inseridos[vizinho_selecionado] = TRUE;
-    }
-
-    caminho[m.numero_elementos] = 0;
-
-    free(inseridos);
+void linha() {
+    int i;
+    printf("\n");
+    for(i = 0; i < 80; i++) printf("_");
+    printf("\n");
+  
 }
 
-
-
-//-----------------------------------------------------------------------------
-
-
-
-//-----------------------------------------------------------------------------
+void imprimir_caminho(int n, int* caminho) {
+    int i;
+    
+    for(i = 0; i < n; i++) {
+      printf(" %d ",caminho[i]);
+    }
+    printf("\n");
+}
 
 void imprimir_matriz( matriz m){
     printf("Matriz\n\n");
@@ -239,25 +203,4 @@ void imprimir_matriz( matriz m){
     }
 
     linha();
-}
-
-//-----------------------------------------------------------------------------
-
-void imprimir_caminho(int n, int* caminho) {
-    int i,d;
-    
-    for(i = 0; i < n; i++) {
-      printf(" %d ",caminho[i]);
-    }
-    printf("\n");
-}
-
-//-----------------------------------------------------------------------------
-
-void linha() {
-    int i;
-    printf("\n");
-    for(i = 0; i < 80; i++) printf("_");
-    printf("\n");
-  
 }
