@@ -24,71 +24,22 @@ int calcular_custo( matriz m, int* caminho);
 void linha();
 void imprimir_caminho(int n, int* caminho);
 void imprimir_matriz( matriz m);
+void player(matriz m);
+void IA();
+void interface_Matriz(matriz m);
 
-int main() {
-
+int main(){
   matriz m;
- FILE *arquivo;
-  arquivo = fopen("cidade_Jogador.txt","r");
-  imprimir_matriz_jogador(arquivo); /* --> aqui está lendo os arquivos referente a matriz que o jodador vai
-  visualizar */
   ler_arquivo(&m, "cidade1.txt"); // matriz que está sendo usada pela IA 
-
-  int custo_IA = 0, menor = INT_MAX ;
-
-  int proximoCaminho,caminhoAtual=0,cont=0,c[10]={'0'} ,custo = 0;
-
-  int tam = m.numero_elementos;
   
-printf("\n");
+  //printa matriz bonita
+  interface_Matriz(m);
+  // função incompleta para o jogador
+  player(m);
+  // chama a resolução da IA
+  IA(m);
 
-//imprimir_matriz(m);
-/*
-    ESTE "FOR" EH PARA AS ENTRADAS DO PLAYER
-
-
-  for(int i=0; i< tam;i++){
-    printf("Qual casa dejesa ir ?\n");
-    scanf("%d", &proximoCaminho); // AQUI DIZ PARA QUAL CAMINHO ELE QUE IR 
-
-    c[i] = proximoCaminho ; // VETOR QUE GUARDA O CAMINHO DO PLAYER 
-    
-    custo = custo + m.elementos[caminhoAtual][proximoCaminho]; // CALCULA O CUTO DA ESCOLHA DO PLAYER 
-
-    caminhoAtual = proximoCaminho ; 
-     FAZ COM QUE O PLAYER FIQUE NO CAMINHO ATUAL ANTES DE IR 
-    PARA A PROXIMA CIDADE 
-}
-printf("\n SEU CAMINHO: ");
-for(int i = 0; i<10;i++){
-  printf("%d ", c[i]);
-}
-printf("\n CUSTO: %d",custo);
-
-// AP PARTIR DAQUI É A JOGADA DA IA 
-*/
-      srand(time(NULL));
-
-    int *solucao_aleatoria = malloc((m.numero_elementos + 1) * sizeof(int*));/*
-    --> ESSE PONTEIRO RECEBE O TAMANHO DA MATRIZ + 1 ESPAÇO ADCIONAL 
-    */ 
-// ESSE FOR ACHA A MELHOR JOGADA DA IA ENTRE UM DETERMINADO VALOR 
-    for(int i = 0; i < 10000; i++) {
-
-        construindo_caminho_IA(m, solucao_aleatoria); // AQUI CONSTROI CAMINHOS ALEATORIOS 
-        custo_IA = calcular_custo(m, solucao_aleatoria);//
-
-        if(menor>custo_IA){
-          menor = custo_IA;
-
-           printf("/n O CAMINHO DA IA FOI: ");
-            imprimir_caminho(m.numero_elementos,solucao_aleatoria);
-           }
-        }
-
-    printf("Custo solução IA: %d\n", menor);
-    linha();
-
+ 
 }
 
 /*
@@ -203,4 +154,71 @@ void imprimir_matriz( matriz m){
     }
 
     linha();
+}
+void player(matriz m){
+   int proximoCaminho,caminhoAtual=0,cont=0,c[10]={'0'} ,custo = 0;
+
+int tam = m.numero_elementos;
+  
+printf("\n");
+
+imprimir_matriz(m);
+
+    //ESTE "FOR" EH PARA AS ENTRADAS DO PLAYER
+
+  for(int i=0; i< tam;i++){
+    printf("Qual casa dejesa ir ?\n");
+    scanf("%d", &proximoCaminho); // AQUI DIZ PARA QUAL CAMINHO ELE QUE IR 
+
+    c[i] = proximoCaminho ; // VETOR QUE GUARDA O CAMINHO DO PLAYER 
+    
+    custo = custo + m.elementos[caminhoAtual][proximoCaminho]; // CALCULA O CUTO DA ESCOLHA DO PLAYER 
+
+    caminhoAtual = proximoCaminho ; 
+    /* FAZ COM QUE O PLAYER FIQUE NO CAMINHO ATUAL ANTES DE IR 
+    PARA A PROXIMA CIDADE 
+    */
+}
+printf("\n SEU CAMINHO: ");
+for(int i = 0; i<10;i++){
+  printf("%d ", c[i]);
+}
+printf("\n CUSTO: %d\n",custo);
+
+}
+
+void IA(matriz m){
+  int custo_IA = 0, menor = INT_MAX ;
+  
+// A PARTIR DAQUI É A JOGADA DA IA 
+      srand(time(NULL));
+
+    int *solucao_aleatoria = malloc((m.numero_elementos + 1) * sizeof(int*));/*
+    --> ESSE PONTEIRO RECEBE O TAMANHO DA MATRIZ + 1 ESPAÇO ADCIONAL 
+    */ 
+// ESSE FOR ACHA A MELHOR JOGADA DA IA ENTRE UM DETERMINADO VALOR 
+    for(int i = 0; i < 10000; i++) {
+
+        construindo_caminho_IA(m, solucao_aleatoria); // AQUI CONSTROI CAMINHOS ALEATORIOS 
+        custo_IA = calcular_custo(m, solucao_aleatoria);//
+
+        if(menor>custo_IA){
+          menor = custo_IA;
+
+           printf("\n O CAMINHO DA IA FOI: ");
+            imprimir_caminho(m.numero_elementos,solucao_aleatoria);
+           }
+        }
+
+    printf("Custo solução IA: %d\n", menor);
+    linha();
+
+}
+void interface_Matriz(matriz m){
+
+  FILE *arquivo;
+  arquivo = fopen("cidade_Jogador.txt","r");
+  imprimir_matriz_jogador(arquivo); /* --> aqui está lendo os arquivos referente a matriz que o jodador vai
+  visualizar */
+
 }
