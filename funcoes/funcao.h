@@ -5,21 +5,23 @@
 
 #define TRUE 1
 #define FALSE 0
+
 int custo_Player = INT_MAX, custo_IA = INT_MAX;
+
 typedef struct {
     int numero_elementos;
     int** elementos;
 } matriz;
-/* struct recebe o tamanho da matriz
-e um ponteiro de ponteiro que recebe os elementos da matriz
-*/
+
 typedef struct{
     int indice;
     int valor;
 }casa;
+
 matriz m;
 FILE *arquivo;
 int r;
+
 void ler_arquivo( matriz* m, char* arquivo);
 void imprimir_matriz_jogador(FILE *arquivo );
 void construindo_caminho_IA( matriz m, int* caminho);
@@ -52,24 +54,21 @@ void ler_arquivo( matriz* m, char* arquivo) {
             fscanf(fp, "%d ", &m->elementos[i][j]);
         }
     }
-
-
     fclose(fp);
 }
 
  void imprimir_matriz_jogador(FILE *arquivo ){
-  if (arquivo == NULL){
-    printf("Nao abriu !\n");
-  }
-
-  char ch = fgetc(arquivo);
-
-  while (ch != EOF){
-  	printf("%c", ch);
-    ch = fgetc(arquivo);
+    if (arquivo == NULL){
+      printf("Nao abriu !\n");
     }
-  printf("\n");
 
+    char ch = fgetc(arquivo);
+
+    while (ch != EOF){
+  	  printf("%c", ch);
+      ch = fgetc(arquivo);
+    }
+    printf("\n");
  }
 
 
@@ -79,46 +78,48 @@ void construindo_caminho_IA( matriz m, int* caminho) {
     casa *vizinhos = malloc(m.numero_elementos * sizeof(casa));
 
     for(int i = 0; i < m.numero_elementos; i++) {
-        inseridos[i] = FALSE;
+      inseridos[i] = FALSE;
     }
 
     caminho[0] = 0;
     inseridos[0] = TRUE;
 
     for(int i = 0; i < m.numero_elementos; i++) {
-        int iv = 0;
+      int iv = 0;
 
-        for(int j = 0; j < m.numero_elementos; j++) {
-            if(!inseridos[j]) {
-                vizinhos[iv].indice = j;
-                vizinhos[iv].valor = m.elementos[i][j];
-                iv++;
-            }
-        }FILE *arquivo;
+      for(int j = 0; j < m.numero_elementos; j++) {
+          if(!inseridos[j]) {
+            vizinhos[iv].indice = j;
+            vizinhos[iv].valor = m.elementos[i][j];
+            iv++;
+          }
+
+        }
+        FILE *arquivo;
 
         if(iv == 0) {
-            caminho[i + 1] = 0;
+          caminho[i + 1] = 0;
         } else {
-            int vizinho_selecionado = rand() % iv;
+          int vizinho_selecionado = rand() % iv;
 
-            caminho[i + 1] = vizinhos[vizinho_selecionado].indice;
-            inseridos[vizinhos[vizinho_selecionado].indice] = TRUE;
+          caminho[i + 1] = vizinhos[vizinho_selecionado].indice;
+          inseridos[vizinhos[vizinho_selecionado].indice] = TRUE;
         }
     }
 
-    free(inseridos);
-    free(vizinhos);
+  free(inseridos);
+  free(vizinhos);
 }
 
 int calcular_custo( matriz m, int* caminho) {
     int custo = 0;
 
     for(int i = 0; i < m.numero_elementos; i++) {
-        custo = custo + m.elementos[caminho[i]][caminho[i + 1]];
+      custo = custo + m.elementos[caminho[i]][caminho[i + 1]];
     }
-
     return custo;
 }
+
 void linha() {
     int i;
     printf("\n");
@@ -133,9 +134,11 @@ int* receber_caminho(matriz m , int* caminho) {
   for(int i=0;i<m.numero_elementos;i++){
     c[i]=0;
   }
+
   for(int i = 0; i < m.numero_elementos; i++) {
     c[i] = caminho[i];
   }
+
   return c;
 }
 
@@ -146,12 +149,11 @@ void imprimir_matriz( matriz m){
             printf("%d ", m.elementos[i][j]);
             printf("|");
         }
-
         printf("\n");
     }
-
     linha();
 }
+
 int repetida(int caminho, int j, int *c){
 
   for(int i=0;i<j;i++){
@@ -161,55 +163,51 @@ int repetida(int caminho, int j, int *c){
   }
   return 0;
 }
+
 void player(matriz m, FILE *arquivo){
 
-
     system("color 2");
-  //arquivo = fopen("recorde.txt","r");
-  //int r = recorde(arquivo);
-  //printf("Recorde Atual: %d\n", r);
+
   interface_Matriz(m);
   int proximoCaminho,d,caminhoAtual=0,cont=0,custo = 0,perda=0;
   int *c;
   int recorde;
   printf("\n");
 
-
-    //ESTE "FOR" EH PARA AS ENTRADAS DO PLAYER
-
   c = malloc(sizeof(int*)*m.numero_elementos);
 
 ////////////////////////////////////
 
-//lembrar de mostrar os possíveis caminhos (Adson)
   printf("\n\nVoce esta na casa 1 \nVoce tem 12 segundos para fazer uma escolha.\n" );
-////////////////////////////FILE *arquivo;///////
+////////////////////////////
   for(int i=0; i<m.numero_elementos-1;i++){
+
     printf("Qual casa dejesa ir ?\n");
     time_t inicio = time(NULL);
     scanf("%d", &proximoCaminho); // AQUI DIZ PARA QUAL CAMINHO ELE QUE IR
 
     proximoCaminho--;
+
   if(proximoCaminho<=0 || proximoCaminho >= m.numero_elementos){
     printf("Digite um valor valido\n");
     i--;
     continue;
   }
-    c[i] = proximoCaminho ; // VETOR QUE GUARDA O CAMINHO DO PLAYER
-    d = repetida(proximoCaminho,i,c);
-    if(d==1){
-      printf("Voce nao pode colocar numeros repetidos\n");
-      i--;
-      continue;
-    }
-        for(int k=0;k<m.numero_elementos;k++){
+  c[i] = proximoCaminho ; // VETOR QUE GUARDA O CAMINHO DO PLAYER
+  d = repetida(proximoCaminho,i,c);
 
-          if((c[i])==k){
-            printf("Casa %d: Voce   | ",(k+1));
-          }else{
-              if(repetida(k,i,c)==1){
+  if(d==1){
+    printf("Voce nao pode colocar numeros repetidos\n");
+    i--;
+    continue;
+  }
+      for(int k=0;k<m.numero_elementos;k++){
+
+        if((c[i])==k){
+          printf("Casa %d: Voce   | ",(k+1));
+        }else{
+            if(repetida(k,i,c)==1){
                 printf("Casa %d: Visitada | ",(k+1));
-
               }
           }
 

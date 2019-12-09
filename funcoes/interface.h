@@ -1,15 +1,6 @@
 
-//typedef struct {
- //   int numero_elementos;
-//    int** elementos;
-//} matriz;
-/* struct recebe o tamanho da matriz
-e um ponteiro de ponteiro que recebe os elementos da matriz
-*/
-//typedef struct{
-//    int indice;
- //   int valor;
-//}casa;
+
+
 matriz m;
 
 int opcao;
@@ -92,7 +83,9 @@ void jogar(){
 }
 void instrucoes(){
     logo();
-    printf("\t\t\t\t\t\t\t 1. Voce nao pode retorna a mesma casa\n\t\t\t\t\t\t\t 2.Voce nao pode colocar numero maior que a quantidade de casas\n\t\t\t\t\t\t\t 3. Voce tem 12s para fazer uma escolha, apos isso sua escolha nao sera valida \n");
+    printf("\t\t\t\t\t\t\t 1. Voce nao pode retorna a mesma casa\n");
+    printf("\t\t\t\t\t\t\t 2.Voce nao pode colocar numero maior que a quantidade de casas\n");
+    printf("\t\t\t\t\t\t\t 3. Voce tem 12s para fazer uma escolha, apos isso sua escolha nao sera valida \n");
     char c;
     voltarMenu();
 };
