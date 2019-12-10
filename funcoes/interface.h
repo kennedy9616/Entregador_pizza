@@ -1,13 +1,13 @@
 
-
-
 matriz m;
+int dificuldade;
+int opcao,cidade;
+int nivel;
 
-int opcao;
 void logo(){
     FILE *arquivo;
     system("cls");
-	arquivo = fopen("logo.txt", "r");
+	arquivo = fopen("funcoes/logo.txt", "r");
 	if (arquivo == NULL){
 		printf("\t\t\t\t\t\t\tNao abriu");
 	}system("color 4");
@@ -42,7 +42,6 @@ void menu(){
         instrucoes();
         break;
     case 3:
-        printf("Recordes.");
         break;
     default:
         printf("\t\t\t\t\t\t\tReinicie o jogo e escolha uma opcao valida");
@@ -57,35 +56,345 @@ void jogar(){
     scanf("%d", &opcao);
     switch(opcao){
     	case 1:
-    		player(m,arquivo);
+
+    	    printf("Escolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade1\n\t\t\t\t\t\t\t2.cidade2\n\t\t\t\t\t\t\t3.cidade3\n\t\t\t\t\t\t\t4.cidade4\n\t\t\t\t\t\t\t5.cidade5\n");
+    	    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+    	    scanf("%d", &cidade);
+    	    switch(cidade){
+                case 1:
+                    ler_arquivo(&m,"cidades/cidade1.txt");
+                    interface_Matriz(m,"cidades/cidade_Jogador1.txt");
+                    player(m);
+                    break;
+                case 2:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+                    interface_Matriz(m,"cidades/cidade_Jogador2.txt");
+                    player(m);
+                    break;
+                case 3:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+                    interface_Matriz(m,"cidades/cidade_Jogador3.txt");
+                    player(m);
+                    break;
+                case 4:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+                    interface_Matriz(m,"cidades/cidade4.txt");
+                    player(m);
+                    break;
+                case 5:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+                    interface_Matriz(m,"cidades/cidade5.txt");
+                    player(m);
+                    break;
+                default:
+                    printf("\nEscolha uma cidade valida\n");
+    	    }
+
     		voltarMenu();
     		break;
+
     	case 2:
-			IA(m);
+
+    	    system("color 2");
+            printf("Escolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade1\n\t\t\t\t\t\t\t2.cidade2\n\t\t\t\t\t\t\t3.cidade3\n\t\t\t\t\t\t\t4.cidade4\n\t\t\t\t\t\t\t5.cidade5\n");
+    	    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+    	    scanf("%d", &cidade);
+    	    switch(cidade){
+                case 1:
+                    ler_arquivo(&m,"cidades/cidade1.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade_Jogador1.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade_Jogador1.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade_Jogador1.txt");
+                            IA(m,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+                     break;
+                case 2:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade_Jogador2.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade_Jogador2.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade_Jogador2.txt");
+                            IA(m,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+
+                    break;
+                case 3:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade_Jogador3.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade_Jogador3.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade_Jogador3.txt");
+                            IA(m,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+                    break;
+                case 4:
+                    ler_arquivo(&m,"cidades/cidade4.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade4.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade4.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade4.txt");
+                            IA(m,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+
+                    break;
+                case 5:
+                    ler_arquivo(&m,"cidades/cidade5.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade5.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade5.txt");
+                            IA(m,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade5.txt");
+                            IA(m,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+                    break;
+                default:
+                    printf("\nEscolha uma cidade valida\n");
+    	    }
+
+
 			voltarMenu();
 			break;
+
 		case 3:
-			player(m,arquivo);
-			IA(m);
-			break;
+
+            system("color 2");
+            printf("Escolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade1\n\t\t\t\t\t\t\t2.cidade2\n\t\t\t\t\t\t\t3.cidade3\n\t\t\t\t\t\t\t4.cidade4\n\t\t\t\t\t\t\t5.cidade5\n");
+    	    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+    	    scanf("%d", &cidade);
+    	    switch(cidade){
+                case 1:
+                    ler_arquivo(&m,"cidades/cidade1.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade_Jogador1.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade_Jogador1.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade_Jogador1.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+                     break;
+                case 2:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade_Jogador2.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade_Jogador2.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade_Jogador2.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+
+                    break;
+                case 3:
+                    ler_arquivo(&m,"cidades/cidade2.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade_Jogador3.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade_Jogador3.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade_Jogador3.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+                    break;
+                case 4:
+                    ler_arquivo(&m,"cidades/cidade4.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade4.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade4.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade4.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+
+                    break;
+                case 5:
+                    ler_arquivo(&m,"cidades/cidade5.txt");
+
+                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    scanf("%d", &nivel);
+                    switch(nivel){
+                        case 1:
+                            dificuldade = 50000;
+                            interface_Matriz(m,"cidades/cidade5.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 2:
+                            dificuldade = 75000;
+                            interface_Matriz(m,"cidades/cidade5.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        case 3:
+                            dificuldade = 100000;
+                            interface_Matriz(m,"cidades/cidade5.txt");
+                            player_IA(m,arquivo,dificuldade);
+                        break;
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        break;
+                    }
+                    break;
+                default:
+                    printf("\nEscolha uma cidade valida\n");
+    	    }
+
 		case 4:
             voltarMenu();
 		default:
 			printf("\t\t\t\t\t\t\tReinicie o jogo e entre com uma opcao valida");
 	}
 
-
-
-
-
-
-
 }
 void instrucoes(){
     logo();
-    printf("\t\t\t\t\t\t\t 1. Voce nao pode retorna a mesma casa\n");
+    printf("\t\t\t\t\t\t\t 1.Voce nao pode retorna a mesma casa\n");
     printf("\t\t\t\t\t\t\t 2.Voce nao pode colocar numero maior que a quantidade de casas\n");
-    printf("\t\t\t\t\t\t\t 3. Voce tem 12s para fazer uma escolha, apos isso sua escolha nao sera valida \n");
+    printf("\t\t\t\t\t\t\t 3.Voce tem 12s para fazer uma escolha, apos isso sua escolha nao sera valida \n");
     char c;
     voltarMenu();
 };

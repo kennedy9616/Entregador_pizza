@@ -6,8 +6,6 @@
 #define TRUE 1
 #define FALSE 0
 
-int custo_Player = INT_MAX, custo_IA = INT_MAX;
-
 typedef struct {
     int numero_elementos;
     int** elementos;
@@ -23,16 +21,16 @@ FILE *arquivo;
 int r;
 
 void ler_arquivo( matriz* m, char* arquivo);
-void imprimir_matriz_jogador(FILE *arquivo );
+void interface_Matriz(matriz m,char *arquivo);
 void construindo_caminho_IA( matriz m, int* caminho);
 int calcular_custo( matriz m, int* caminho);
 void linha();
 int* receber_caminho(matriz m , int* caminho);
 void imprimir_matriz( matriz m);
 int repetida(int caminho, int i, int c[]);
-void player(matriz m, FILE *arquivo);
-void IA(matriz m);
-void interface_Matriz(matriz m);
+void player(matriz m);
+void IA(matriz m, int dificuldade);
+void player_IA(matriz m, FILE *arquivo, int dificuldade);
 void addRecorde(FILE *arquivo, int recorde);
 int recorde(FILE *);
 
@@ -56,22 +54,6 @@ void ler_arquivo( matriz* m, char* arquivo) {
     }
     fclose(fp);
 }
-
- void imprimir_matriz_jogador(FILE *arquivo ){
-    if (arquivo == NULL){
-      printf("Nao abriu !\n");
-    }
-
-    char ch = fgetc(arquivo);
-
-    while (ch != EOF){
-  	  printf("%c", ch);
-      ch = fgetc(arquivo);
-    }
-    printf("\n");
- }
-
-
 
 void construindo_caminho_IA( matriz m, int* caminho) {
     int *inseridos = malloc(m.numero_elementos * sizeof(int));
@@ -154,6 +136,23 @@ void imprimir_matriz( matriz m){
     linha();
 }
 
+void interface_Matriz(matriz m,char *arquivo){
+  FILE* fp = fopen(arquivo,"r");
+
+  if (fp == NULL){
+    printf("Não abriu !\n");
+  }
+
+  char ch = fgetc(fp);
+
+  while (ch != EOF){
+  	printf("%c", ch);
+    ch = fgetc(fp);
+    }
+  printf("\n");
+free(fp);
+}
+
 int repetida(int caminho, int j, int *c){
 
   for(int i=0;i<j;i++){
@@ -164,11 +163,10 @@ int repetida(int caminho, int j, int *c){
   return 0;
 }
 
-void player(matriz m, FILE *arquivo){
+void player(matriz m){
 
     system("color 2");
 
-  interface_Matriz(m);
   int proximoCaminho,d,caminhoAtual=0,cont=0,custo = 0,perda=0;
   int *c;
   int recorde;
@@ -178,7 +176,7 @@ void player(matriz m, FILE *arquivo){
 
 ////////////////////////////////////
 
-  printf("\n\nVoce esta na casa 1 \nVoce tem 12 segundos para fazer uma escolha.\n" );
+  printf("\n\nVoce esta na casa 1 \n" );
 ////////////////////////////
   for(int i=0; i<m.numero_elementos-1;i++){
 
@@ -223,8 +221,7 @@ void player(matriz m, FILE *arquivo){
           if((k+1)%5==0){
             printf("\n\n");
           }
-        }system("color 4");
-
+        }
 
     custo = custo + m.elementos[caminhoAtual][proximoCaminho]; // CALCULA O CUTO DA ESCOLHA DO PLAYER
     printf("\nCusto ate agora: %d \n\n", custo);
@@ -232,14 +229,13 @@ void player(matriz m, FILE *arquivo){
     /* FAZ COM QUE O PLAYER FIQUE NO CAint recorde(FILE *arquivo)MINHO ATUAL ANTES DE IR
     PARA A PROXIMA CIDADE
     */
-     //interface_Matriz(m);
     time_t fim = time(NULL);
 
     if((fim-inicio)>12){
       i=m.numero_elementos;
       printf("   PERDEU!!!\n O TEU TEMPO ACABOU!!!");
       perda=1;
-      }
+    }
 
   }
 
@@ -248,35 +244,28 @@ void player(matriz m, FILE *arquivo){
   if(perda==1){
     custo = 9999999;
   }
-if(custo<recorde){
-  recorde = custo;
-  addRecorde(arquivo, recorde);
-}
 
-printf("\n SEU CAMINHO: 1 ");
-for(int i = 0; i<m.numero_elementos;i++){
-  printf("%d ", c[i]+1);
-}
+  printf("\n SEU CAMINHO: 1 ");
+  for(int i = 0; i<m.numero_elementos;i++){
+    printf("%d ", c[i]+1);
+  }
 
-printf("\n CUSTO: %d\n",custo);
-custo_Player = custo;
+  printf("\n CUSTO: %d\n",custo);
 
 }
 
-void IA(matriz m){
+void IA(matriz m, int dificuldade){
 
-  interface_Matriz(m);
   int custo_IA = 0, menor = INT_MAX ;
-// A PARTIR DAQUI É A JOGADA DA IA
-      srand(1);
 
-    int *solucao_aleatoria = malloc((m.numero_elementos + 1) * sizeof(int*));/*
-    --> ESSE PONTEIRO RECEBE O TAMANHO DA MATRIZ + 1 ESPAÇO ADCIONAL
-    */
+  srand(time(NULL));
+
+  int *solucao_aleatoria = malloc((m.numero_elementos + 1) * sizeof(int*));
+
   int *d=malloc(sizeof(int**)*m.numero_elementos);
 
 // ESSE FOR ACHA A MELHOR JOGADA DA IA ENTRE UM DETERMINADO VALOR
-    for(int i = 0; i < 100000; i++) {
+    for(int i = 0; i < dificuldade; i++) {
 
         construindo_caminho_IA(m, solucao_aleatoria); // AQUI CONSTROI CAMINHOS ALEATORIOS
         custo_IA = calcular_custo(m, solucao_aleatoria);//
@@ -292,43 +281,139 @@ void IA(matriz m){
   }
   printf("1");
   printf("\nCusto solucao IA: %d\n", menor);
-  custo_IA = menor;
+
   linha();
+  free(d);
   free(solucao_aleatoria);
 }
-void interface_Matriz(matriz m){
 
-  FILE *arquivo;
-  arquivo = fopen("cidade_Jogador1.txt","r");
-  imprimir_matriz_jogador(arquivo); /* --> aqui está lendo os arquivos referente a matriz que o jodador vai
-  visualizar */
-free(arquivo);
-}
-void player_IA(){
-    player(m, arquivo);
-    IA(m);
+void player_IA(matriz m, FILE *arquivo, int dificuldade){
+////////////////  PLAYER  ///////////////////
 
-    printf("Player: %d \n IA: %d", custo_Player, custo_IA);
-    if (custo_IA > custo_Player){
-        printf("VOCE PERDEU!!");
-    }else{
-        printf("VOCE GANHOU");
+    system("color 2");
+
+  int proximoCaminho,d,caminhoAtual=0,cont=0,custo = 0,perda=0;
+  int *c;
+  int recorde;
+  printf("\n");
+
+  c = malloc(sizeof(int*)*m.numero_elementos);
+
+////////////////////////////////////
+  printf("\n\nVoce esta na casa 1 \n" );
+////////////////////////////
+  for(int i=0; i<m.numero_elementos-1;i++){
+
+    printf("Qual casa dejesa ir ?\n");
+    time_t inicio = time(NULL);
+    scanf("%d", &proximoCaminho); // AQUI DIZ PARA QUAL CAMINHO ELE QUE IR
+
+    proximoCaminho--;
+
+  if(proximoCaminho<=0 || proximoCaminho >= m.numero_elementos){
+    printf("Digite um valor valido\n");
+    i--;
+    continue;
+  }
+  c[i] = proximoCaminho ; // VETOR QUE GUARDA O CAMINHO DO PLAYER
+  d = repetida(proximoCaminho,i,c);
+
+  if(d==1){
+    printf("Voce nao pode colocar numeros repetidos\n");
+    i--;
+    continue;
+  }
+      for(int k=0;k<m.numero_elementos;k++){
+
+        if((c[i])==k){
+          printf("Casa %d: Voce   | ",(k+1));
+        }else{
+            if(repetida(k,i,c)==1){
+                printf("Casa %d: Visitada | ",(k+1));
+              }
+          }
+
+          if(repetida(k,i,c)==0){
+            if((k!=0)&&((c[i])!=k)){
+              printf("Casa %d:   %d    | ",(k+1),m.elementos[caminhoAtual][k]);
+            }else{
+              if(k==0)
+                printf("Casa %d: Partida | ",(k+1));
+            }
+          }
+
+          if((k+1)%5==0){
+            printf("\n\n");
+          }
+        }
+
+    custo = custo + m.elementos[caminhoAtual][proximoCaminho]; // CALCULA O CUTO DA ESCOLHA DO PLAYER
+    printf("\nCusto ate agora: %d \n\n", custo);
+    caminhoAtual = proximoCaminho ;
+    /* FAZ COM QUE O PLAYER FIQUE NO CAint recorde(FILE *arquivo)MINHO ATUAL ANTES DE IR
+    PARA A PROXIMA CIDADE
+    */
+
+    time_t fim = time(NULL);
+
+    if((fim-inicio)>12){
+      i=m.numero_elementos;
+      printf("   PERDEU!!!\n O TEU TEMPO ACABOU!!!");
+      perda=1;
     }
-}
-void addRecorde(FILE *arquivo, int recorde){
-  if (arquivo == NULL){
-    printf("Não abriu !\n");
-  }
-  arquivo = fopen("recorde.txt","w");
-  fprintf(arquivo,"%d",recorde);
 
-}
-int recorde(FILE *arquivo){
-  if (arquivo == NULL){
-    printf("Nao abriu !\n");
   }
-  int ch;
-  fscanf(arquivo,"%d", &ch);
-  return ch;
 
+  custo = custo + m.elementos[caminhoAtual][0];
+
+  if(perda==1){
+    custo = 9999999;
+  }
+
+  printf("\n SEU CAMINHO: 1 ");
+  for(int i = 0; i<m.numero_elementos;i++){
+    printf("%d ", c[i]+1);
+  }
+
+  printf("\n CUSTO: %d\n",custo);
+  int custo_Player = custo;
+    ///////////////// IA /////////////////////////
+
+  int custo_IA = 0, menor = INT_MAX ;
+
+  srand(time(NULL));
+ int *p = malloc((m.numero_elementos)*sizeof(int**));;
+
+  int *solucao_aleatoria = malloc((m.numero_elementos + 1) * sizeof(int*));
+
+// ESSE FOR ACHA A MELHOR JOGADA DA IA ENTRE UM DETERMINADO VALOR
+    for(int i = 0; i < dificuldade; i++) {
+
+        construindo_caminho_IA(m, solucao_aleatoria); // AQUI CONSTROI CAMINHOS ALEATORIOS
+        custo_IA = calcular_custo(m, solucao_aleatoria);//
+
+        if(menor>custo_IA){
+          menor = custo_IA;
+          p = receber_caminho(m, solucao_aleatoria);
+        }
+    }
+    printf("custo IA: ");
+
+  for(int i=0;i<m.numero_elementos;i++){
+    printf("%d ", p[i]+1);
+  }
+
+  printf("1");
+  printf("\nCusto solucao IA: %d\n", menor);
+  custo_IA=menor;
+  linha();
+
+    printf("Player: %d \n IA: %d\n", custo_Player, custo_IA);
+    if (custo_IA < custo_Player){
+        printf("\nVOCE PERDEU!!\n");
+    }else{
+        printf("\nVOCE GANHOU\n");
+    }
+    free(p);
+    free(solucao_aleatoria);
 }
