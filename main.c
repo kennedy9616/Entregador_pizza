@@ -6,7 +6,6 @@
 #include "funcoes/interface.h"
 
 int main(){
-    ler_arquivo(&m,"cidades/cidade1.txt");
     menu();
 
 }
