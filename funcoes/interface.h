@@ -9,7 +9,7 @@ void logo(){
     system("cls");
 	arquivo = fopen("funcoes/logo.txt", "r");
 	if (arquivo == NULL){
-		printf("\t\t\t\t\t\t\tNao abriu");
+		printf("\t\t\t\t\t\t\tNao abriu!");
 	}system("color 4");
 	char ch = fgetc(arquivo);
 	system("color 4");
@@ -30,9 +30,9 @@ void voltarMenu(){
 }
 void menu(){
     logo();
-	printf("\t\t\t\t\t\t\t1.Jogar\n\t\t\t\t\t\t\t2.Instrucoes\n\t\t\t\t\t\t\t3.Recordes.");
+	printf("\t\t\t\t\t\t\t1.Jogar\n\t\t\t\t\t\t\t2.Instrucões\n\t\t\t\t\t\t\t3.Recordes.");
 
-	printf("\n\t\t\t\t\t\t\tDIGITE A OPCAO: ");
+	printf("\n\t\t\t\t\t\t\tDIGITE A OPÇÃO: ");
     scanf("%d", &opcao);
 	switch (opcao){
     case 1:
@@ -44,7 +44,7 @@ void menu(){
     case 3:
         break;
     default:
-        printf("\t\t\t\t\t\t\tReinicie o jogo e escolha uma opcao valida");
+        printf("\t\t\t\t\t\t\tReinicie o jogo e escolha uma opção válida");
 	}
 	getch();
 }
@@ -52,13 +52,13 @@ void jogar(){
     logo();
     printf("\t\t\t\t\t\t\t1.Player\n\t\t\t\t\t\t\t2.I.A\n\t\t\t\t\t\t\t3.Player vs IA\n\t\t\t\t\t\t\t4.Voltar para o menu.");
 
-    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
     scanf("%d", &opcao);
     switch(opcao){
     	case 1:
-
-    	    printf("Escolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade1\n\t\t\t\t\t\t\t2.cidade2\n\t\t\t\t\t\t\t3.cidade3\n\t\t\t\t\t\t\t4.cidade4\n\t\t\t\t\t\t\t5.cidade5\n");
-    	    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+            system("color 2");
+    	    printf("\t\t\t\t\t\t\tEscolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade 1\n\t\t\t\t\t\t\t2.cidade 2\n\t\t\t\t\t\t\t3.cidade 3\n\t\t\t\t\t\t\t4.cidade 4\n\t\t\t\t\t\t\t5.cidade 5\n");
+    	    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
     	    scanf("%d", &cidade);
     	    switch(cidade){
                 case 1:
@@ -87,7 +87,7 @@ void jogar(){
                     player(m);
                     break;
                 default:
-                    printf("\nEscolha uma cidade valida\n");
+                    printf("\nEscolha uma cidade válida!\n");
     	    }
 
     		voltarMenu();
@@ -95,16 +95,16 @@ void jogar(){
 
     	case 2:
 
-    	    system("color 2");
-            printf("Escolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade1\n\t\t\t\t\t\t\t2.cidade2\n\t\t\t\t\t\t\t3.cidade3\n\t\t\t\t\t\t\t4.cidade4\n\t\t\t\t\t\t\t5.cidade5\n");
-    	    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+    	    system("color 3");
+            printf("\t\t\t\t\t\t\tEscolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade 1\n\t\t\t\t\t\t\t2.cidade 2\n\t\t\t\t\t\t\t3.cidade 3\n\t\t\t\t\t\t\t4.cidade 4\n\t\t\t\t\t\t\t5.cidade 5\n");
+    	    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
     	    scanf("%d", &cidade);
     	    switch(cidade){
                 case 1:
                     ler_arquivo(&m,"cidades/cidade1.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -122,15 +122,15 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade_Jogador1.txt");
                             IA(m,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
                      break;
                 case 2:
                     ler_arquivo(&m,"cidades/cidade2.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -148,7 +148,7 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade_Jogador2.txt");
                             IA(m,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
 
@@ -156,8 +156,8 @@ void jogar(){
                 case 3:
                     ler_arquivo(&m,"cidades/cidade2.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -175,15 +175,15 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade_Jogador3.txt");
                             IA(m,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
                     break;
                 case 4:
                     ler_arquivo(&m,"cidades/cidade4.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -201,7 +201,7 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade4.txt");
                             IA(m,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
 
@@ -209,8 +209,8 @@ void jogar(){
                 case 5:
                     ler_arquivo(&m,"cidades/cidade5.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -228,12 +228,12 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade5.txt");
                             IA(m,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
                     break;
                 default:
-                    printf("\nEscolha uma cidade valida\n");
+                    printf("\nEscolha uma cidade válida!\n");
     	    }
 
 
@@ -242,16 +242,16 @@ void jogar(){
 
 		case 3:
 
-            system("color 2");
-            printf("Escolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade1\n\t\t\t\t\t\t\t2.cidade2\n\t\t\t\t\t\t\t3.cidade3\n\t\t\t\t\t\t\t4.cidade4\n\t\t\t\t\t\t\t5.cidade5\n");
-    	    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+            system("color 5");
+            printf("\t\t\t\t\t\t\tEscolha a cidade: \n\n\t\t\t\t\t\t\t1.cidade 1\n\t\t\t\t\t\t\t2.cidade 2\n\t\t\t\t\t\t\t3.cidade 3\n\t\t\t\t\t\t\t4.cidade 4\n\t\t\t\t\t\t\t5.cidade 5\n");
+    	    printf("\n\t\t\t\t\t\t\tDigite a opcão: ");
     	    scanf("%d", &cidade);
     	    switch(cidade){
                 case 1:
                     ler_arquivo(&m,"cidades/cidade1.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -269,15 +269,15 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade_Jogador1.txt");
                             player_IA(m,arquivo,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
                      break;
                 case 2:
                     ler_arquivo(&m,"cidades/cidade2.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -295,7 +295,7 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade_Jogador2.txt");
                             player_IA(m,arquivo,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
 
@@ -303,8 +303,8 @@ void jogar(){
                 case 3:
                     ler_arquivo(&m,"cidades/cidade2.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -322,15 +322,15 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade_Jogador3.txt");
                             player_IA(m,arquivo,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
                     break;
                 case 4:
                     ler_arquivo(&m,"cidades/cidade4.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -348,7 +348,7 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade4.txt");
                             player_IA(m,arquivo,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
 
@@ -356,8 +356,8 @@ void jogar(){
                 case 5:
                     ler_arquivo(&m,"cidades/cidade5.txt");
 
-                    printf("\t\t\t\t\t\t\t1.FACIL\n\t\t\t\t\t\t\t2.MEDIO\n\t\t\t\t\t\t\t3.DIFICIL\n");
-                    printf("\n\t\t\t\t\t\t\tDigite a opcao: ");
+                    printf("\t\t\t\t\t\t\t1.FÁCIL\n\t\t\t\t\t\t\t2.MÉDIO\n\t\t\t\t\t\t\t3.DIFÍCIL\n");
+                    printf("\n\t\t\t\t\t\t\tDigite a opção: ");
                     scanf("%d", &nivel);
                     switch(nivel){
                         case 1:
@@ -375,26 +375,26 @@ void jogar(){
                             interface_Matriz(m,"cidades/cidade5.txt");
                             player_IA(m,arquivo,dificuldade);
                         break;
-                        default: printf("\nRENICIE E ESCOLHA UMA DIFICULDADE\n");
+                        default: printf("\nREINICIE E ESCOLHA UMA DIFICULDADE!\n");
                         break;
                     }
                     break;
                 default:
-                    printf("\nEscolha uma cidade valida\n");
+                    printf("\nEscolha uma cidade válida!\n");
     	    }
 
 		case 4:
             voltarMenu();
 		default:
-			printf("\t\t\t\t\t\t\tReinicie o jogo e entre com uma opcao valida");
+			printf("\t\t\t\t\t\t\tReinicie o jogo e entre com uma opção válida");
 	}
 
 }
 void instrucoes(){
     logo();
-    printf("\t\t\t\t\t\t\t 1.Voce nao pode retorna a mesma casa\n");
-    printf("\t\t\t\t\t\t\t 2.Voce nao pode colocar numero maior que a quantidade de casas\n");
-    printf("\t\t\t\t\t\t\t 3.Voce tem 12s para fazer uma escolha, apos isso sua escolha nao sera valida \n");
+    printf("\t\t\t\t\t\t\t 1.Você não pode retorna a mesma casa.\n");
+    printf("\t\t\t\t\t\t\t 2.Você não pode colocar número maior que a quantidade de casas.\n");
+    printf("\t\t\t\t\t\t\t 3.Você tem 12s para fazer uma escolha, após isso sua escolha não será válida. \n");
     char c;
     voltarMenu();
 };
